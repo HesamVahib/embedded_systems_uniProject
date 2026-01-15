@@ -124,28 +124,40 @@ static float plant_step(float uin)
   return y;
 }
 
-/* ===== PI step (anti-windup) ===== */
+/* ===== PI step (Improved with Clamping Anti-windup) ===== */
 static float pi_step(float ref, float meas01)
 {
-  float e  = ref - meas01;
+  /* 1. Calculate error */
+  float e = ref - meas01;
+
+  /* 2. Proportional term */
   float up = g_kp * e;
 
-  float ui_new = g_i + (g_ki * TS_SEC) * e;
-  float u_try  = up + ui_new;
+  /* 3. Potential integral term update */
+  /* Note: TS_SEC should be 0.001 for 1kHz */
+  float ui_next = g_i + (g_ki * TS_SEC) * e;
 
-  if ((u_try < 1.0f && u_try > 0.0f) ||
-      (u_try >= 1.0f && e < 0.0f) ||
-      (u_try <= 0.0f && e > 0.0f))
+  /* 4. Combined control signal before clamping */
+  float u_total = up + ui_next;
+
+  /* 5. Clamping Anti-windup Logic
+     Stop integrating if output is out of bounds [0, 1]
+     unless the error direction helps bring it back. */
+  uint8_t saturated = (u_total > 1.0f) || (u_total < 0.0f);
+  uint8_t same_sign = ((e > 0 && u_total > 1.0f) || (e < 0 && u_total < 0.0f));
+
+  if (!saturated || !same_sign)
   {
-    g_i = ui_new;
+    g_i = ui_next;
   }
 
-  float u = up + g_i;
-  if (u > 1.0f) u = 1.0f;
-  if (u < 0.0f) u = 0.0f;
-  return u;
-}
+  /* 6. Final output saturation */
+  float u_final = up + g_i;
+  if (u_final > 1.0f) u_final = 1.0f;
+  if (u_final < 0.0f) u_final = 0.0f;
 
+  return u_final;
+}
 /* ===== Public API ===== */
 
 const char* mode_str(mode_t m)
@@ -191,11 +203,11 @@ void app_tick_1khz(void)
     /* measurement: magnitude + clamp + LPF */
     float y = g_uout;
     if (y < 0.0f) y = -y;
-    if (y > Y_FULL_SCALE) y = Y_FULL_SCALE;
+    if (y > 1.2f) y = 1.2f;
 
     float meas01 = clamp01(y / Y_FULL_SCALE);
 
-    const float alpha = 0.02f; /* ~50 ms at 1 kHz */
+    const float alpha = 0.05f;
     g_meas_f += alpha * (meas01 - g_meas_f);
     g_meas01 = g_meas_f;
 

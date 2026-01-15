@@ -60,8 +60,8 @@ all: main-build
 main-build: Final.elf secondary-outputs
 
 # Tool invocations
-Final.elf Final.map: $(OBJS) $(USER_OBJS) H:\LUT-\ Hesam\Embedded\ Systems\embedded_systems_uniProject\Final\ Project\STM32F411RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Final.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"H:\LUT- Hesam\Embedded Systems\embedded_systems_uniProject\Final Project\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Final.map" -Wl,--gc-sections -static -u _printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Final.elf Final.map: $(OBJS) $(USER_OBJS) H:\LUT-\ Hesam\Embedded\ Systems\embedded_systems_uniProject\Final\ Project\new\Final\ Project\STM32F411RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Final.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"H:\LUT- Hesam\Embedded Systems\embedded_systems_uniProject\Final Project\new\Final Project\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Final.map" -Wl,--gc-sections -static -u _printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
