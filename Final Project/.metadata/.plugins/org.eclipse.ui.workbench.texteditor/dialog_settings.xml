@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item key="hasShownOverlayPopupBefore" value="true"/>
+	<item key="replaceBarOpen" value="false"/>
+	<list key="searchhistory">
+		<item value="app_init"/>
+		<item value="ki step"/>
+		<item value="scan_inc"/>
+		<item value="void app_tick_1khz(void)"/>
+		<item value="app_tick_1khz()"/>
+		<item value="HAL_UART_RxCpltCallback"/>
+		<item value="HAL_UART_RxCpltCallback()"/>
+		<item value="status"/>
+		<item value="app_b"/>
+		<item value="HAL_TIM_PWM_Start(&amp;htim2, TIM_CHANNEL_1);"/>
+	</list>
+</section>
