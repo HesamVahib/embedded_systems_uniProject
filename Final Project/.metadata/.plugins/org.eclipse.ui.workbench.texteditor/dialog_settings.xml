@@ -3,6 +3,12 @@
 	<item key="hasShownOverlayPopupBefore" value="true"/>
 	<item key="replaceBarOpen" value="false"/>
 	<list key="searchhistory">
+		<item value="GPIOB"/>
+		<item value="GPIO_PIN_8"/>
+		<item value="GPIO_PIN_6"/>
+		<item value="already"/>
+		<item value="ref = "/>
+		<item value="ref = sin(2 * pi * 50 * t);"/>
 		<item value="app_init"/>
 		<item value="ki step"/>
 		<item value="scan_inc"/>
@@ -12,6 +18,5 @@
 		<item value="HAL_UART_RxCpltCallback()"/>
 		<item value="status"/>
 		<item value="app_b"/>
-		<item value="HAL_TIM_PWM_Start(&amp;htim2, TIM_CHANNEL_1);"/>
 	</list>
 </section>
